@@ -36,26 +36,33 @@ public class Player {
 		}
 		this.limit = limit;
 	}
+	
 
 	public boolean balanceExceedsLimit() {
 		return (balance > limit);
 	}
-	
+
 	public boolean balanceExceedsLimitBy(int amount) {
-		return (balance - amount > limit);
+		return !(balance - amount < limit);
 	}
-	
+
 	public void takeBet(int bet) {
-		if (bet < 0) throw new IllegalArgumentException("Bet cannot be negative.");
-		if (!balanceExceedsLimitBy(bet)) throw new IllegalArgumentException("Placing bet would go below limit.");
+		if (bet < 0) {
+			throw new IllegalArgumentException("Bet cannot be negative.");
+		}
+		if (!balanceExceedsLimitBy(bet)) {
+			throw new IllegalArgumentException("Placing bet would go below limit.");
+		}
 		balance = balance - bet;
 	}
-	
+
 	public void receiveWinnings(int winnings) {
-		if (winnings < 0) throw new IllegalArgumentException("Winnings cannot be negative.");
-		balance = balance + winnings;		
+		if (winnings < 0) {
+			throw new IllegalArgumentException("Winnings cannot be negative.");
+		}
+		balance = balance + winnings;
 	}
-	
+
 	public String toString() {
 		return String.format("Player: %s, Balance: %d, Limit: %d", name, balance, limit);
 	}
